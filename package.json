@@ -9,7 +9,9 @@
         "start": "node dist/server.js",
         "dev": "tsx watch src/server.ts",
         "lint": "eslint . --ext .ts",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "createTable": "npx node-pg-migrate create" ,
+        "migrate": "node-pg-migrate up"
     },
     "keywords": [],
     "author": "",
@@ -25,6 +27,8 @@
         "jiti": "^2.7.0",
         "jsonwebtoken": "^9.0.3",
         "morgan": "^1.12.0",
+        "node-pg-migrate": "^9.0.0",
+        "pg": "^8.23.0",
         "winston": "^3.19.0",
         "zod": "^4.5.4"
     },
@@ -37,6 +41,7 @@
         "@types/jsonwebtoken": "^9.0.10",
         "@types/morgan": "^1.9.10",
         "@types/node": "^26.4.1",
+        "@types/pg": "^8.23.1",
         "@types/winston": "^2.4.4",
         "prettier": "^3.9.6",
         "ts-node": "^10.9.2",
