@@ -16,7 +16,7 @@ export const up = (pgm) => {
             CREATE TABLE refresh_tokens (
                 id TEXT NOT NULL,
                 user_id uuid NOT NULL,
-                tokenHash TEXT NOT NULL UNIQUE,
+                token_hash TEXT NOT NULL UNIQUE,
                 expired_at TIMESTAMP NOT NULL,
                 revoked_at TIMESTAMP,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -1,6 +1,7 @@
 import { pool } from '../../../databases/connection.js';
 import type { User } from '../models/user.model.js';
 
+// Login
 export const findUserByEmail = async (email: string): Promise<User | null> => {
     const result = await pool.query<User>(
         `

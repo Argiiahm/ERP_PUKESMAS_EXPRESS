@@ -2,8 +2,12 @@ import bcrypt from 'bcrypt';
 import { findUserByEmail } from '../repositories/auth.repository.js';
 import type { LoginInput } from '../validations/auth.schema.js';
 import createHttpError from 'http-errors';
-import { CreateAccessToken, CreateRefreshToken } from '../../../utils/jwt.js';
-import { insertRefreshToken } from '../repositories/refreshToken.repository.js';
+import { CreateAccessToken, CreateRefreshToken, VerifyRefreshToken } from '../../../utils/jwt.js';
+import {
+    findRefreshTokenById,
+    insertRefreshToken,
+    updateRefreshToken,
+} from '../repositories/refreshToken.repository.js';
 
 export const login = async (data: LoginInput) => {
     // get method FindUser from Repository
@@ -48,4 +52,82 @@ export const login = async (data: LoginInput) => {
         AccessToken,
         RefreshToken,
     };
+};
+
+// Refresh
+export const refresh = async (refreshToken: string) => {
+    if (!refreshToken) {
+        throw createHttpError.Unauthorized('Unauthorization');
+    }
+
+    // Verify RefreshToken
+    const payload = await VerifyRefreshToken(refreshToken);
+
+    // Get All RefreshTokens Data,
+    // Check All, is valid?
+    // Generate New AccessTokens
+
+    const session = await findRefreshTokenById(payload.tokenId);
+
+    if (!session) {
+        throw createHttpError.Unauthorized('Invalid RefreshToken');
+    }
+
+    if (session.expired_at < new Date()) {
+        throw createHttpError.Unauthorized('RefreshToken Expires');
+    }
+
+    if (session.revoked_at) {
+        throw createHttpError.Unauthorized('RefreshToken Revoked.');
+    }
+
+    // Compare
+    const compare = await bcrypt.compare(refreshToken, session.token_hash);
+    if (!compare) {
+        throw createHttpError.Unauthorized('Invalid RefreshToken');
+    }
+
+    // Generate New AccessToken
+    const accessToken = CreateAccessToken({
+        user_id: session.user_id,
+        email: session.email,
+        role: session.role,
+    });
+
+    return {
+        accessToken,
+    };
+};
+
+// Logout
+export const logout = async (refreshToken: string) => {
+    if (!refreshToken) {
+        throw createHttpError.Unauthorized('Unauthorization');
+    }
+
+    // Verify RefreshToken
+    const payload = await VerifyRefreshToken(refreshToken);
+
+    // Get All RefreshTokens Data,
+    // Check All, is valid?
+    // Generate New AccessTokens
+
+    const session = await findRefreshTokenById(payload.tokenId);
+
+    if (!session) {
+        throw createHttpError.Unauthorized('Invalid RefreshToken');
+    }
+
+    if (session.expired_at < new Date()) {
+        throw createHttpError.Unauthorized('RefreshToken Expires');
+    }
+
+    if (session.revoked_at) {
+        throw createHttpError.Unauthorized('RefreshToken Revoked.');
+    }
+
+    const revoked_at = new Date();
+    await updateRefreshToken(revoked_at, session.id);
+
+    return;
 };

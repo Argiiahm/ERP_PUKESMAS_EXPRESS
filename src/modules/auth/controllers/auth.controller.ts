@@ -27,3 +27,26 @@ export const login = asyncHandler(
         });
     }
 );
+
+// Refresh
+export const refresh = asyncHandler(async (req: Request, res: Response) => {
+    const refreshToken = req.cookies.refreshToken;
+    const result = await AuthService.refresh(refreshToken);
+    return res.status(200).json({
+        success: true,
+        data: {
+            accessToken: result.accessToken,
+        },
+    });
+});
+
+// Logout
+export const logout = asyncHandler(async (req: Request, res: Response) => {
+    const refreshToken = req.cookies.refreshToken;
+    await AuthService.logout(refreshToken);
+    res.clearCookie('refreshToken', cookieOptions);
+    return res.status(200).json({
+        success: true,
+        message: 'Successfully Logout',
+    });
+});
