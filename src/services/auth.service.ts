@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { findUserByEmail } from '../repositories/auth.repository.js';
+import { findUserByEmail } from '../repositories/user.repository.js';
 import type { LoginInput } from '../validations/auth.schema.js';
 import createHttpError from 'http-errors';
 import { CreateAccessToken, CreateRefreshToken, VerifyRefreshToken } from '../utils/jwt.js';
@@ -19,6 +19,7 @@ export const login = async (data: LoginInput) => {
 
     // Compare the password
     const comparePassword = await bcrypt.compare(data.password, user.password);
+
     // is same?
     if (!comparePassword) {
         throw createHttpError.Unauthorized('Invalid Credentials');

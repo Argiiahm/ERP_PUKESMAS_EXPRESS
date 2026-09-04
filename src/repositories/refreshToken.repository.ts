@@ -44,7 +44,6 @@ export const findRefreshTokenById = async (id: string) => {
 
                 u.id,
                 u.name,
-                u.username,
                 u.email,
                 u.telp,
                 u.role

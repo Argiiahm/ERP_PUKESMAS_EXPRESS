@@ -23,9 +23,8 @@ export const up = (pgm) => {
         CREATE TABLE users (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(), 
             name VARCHAR(100) NOT NULL, 
-            username VARCHAR(50) NOT NULL UNIQUE,
             email VARCHAR(255) NOT NULL UNIQUE,
-            telp VARCHAR(20) NOT NULL,
+            telp VARCHAR(20) NOT NULL UNIQUE,
             role user_role NOT NULL DEFAULT 'staff',
             password TEXT NOT NULL, 
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
