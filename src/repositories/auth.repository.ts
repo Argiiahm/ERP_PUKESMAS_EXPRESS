@@ -1,4 +1,4 @@
-import { pool } from '../../../databases/connection.js';
+import { pool } from '../databases/connection.js';
 import type { User } from '../models/user.model.js';
 
 // Login

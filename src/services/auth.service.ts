@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { findUserByEmail } from '../repositories/auth.repository.js';
 import type { LoginInput } from '../validations/auth.schema.js';
 import createHttpError from 'http-errors';
-import { CreateAccessToken, CreateRefreshToken, VerifyRefreshToken } from '../../../utils/jwt.js';
+import { CreateAccessToken, CreateRefreshToken, VerifyRefreshToken } from '../utils/jwt.js';
 import {
     findRefreshTokenById,
     insertRefreshToken,

@@ -1,4 +1,4 @@
-import { pool } from '../../../databases/connection.js';
+import { pool } from '../databases/connection.js';
 import type { RefreshToken } from '../models/refreshToken.model.js';
 
 // Insert RefreshToken

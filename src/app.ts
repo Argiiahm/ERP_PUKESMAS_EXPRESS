@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { morganMiddleware } from './middlewares/morgan.middleware.js';
-import Authroute from './modules/auth/routes/auth.route.js';
+import Authroute from './routes/auth.route.js';
 import { errorHandler } from './middlewares/error.middleware.js';
 
 const app = express();

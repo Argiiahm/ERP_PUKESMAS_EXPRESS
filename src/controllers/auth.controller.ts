@@ -1,8 +1,8 @@
 import * as AuthService from '../services/auth.service.js';
-import { asyncHandler } from '../../../utils/asyncHandler.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 import type { Request, Response } from 'express';
 import { LoginSchema, type LoginInput } from '../validations/auth.schema.js';
-import { cookieOptions } from '../../../constants/cookie.js';
+import { cookieOptions } from '../constants/cookie.js';
 
 // Login
 export const login = asyncHandler(
