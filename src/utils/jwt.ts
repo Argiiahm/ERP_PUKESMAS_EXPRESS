@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 // type UserRole
-type UserRole = 'admin' | 'doctor' | 'nurse' | 'staff';
+export type UserRole = 'admin' | 'doctor' | 'nurse' | 'staff';
 
 // AccessTokenPayload
 export interface AccessTokenPayload {
